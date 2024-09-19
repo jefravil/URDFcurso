@@ -11,12 +11,23 @@
         <color rgba="0 0 1 1"/>
     </material>
 
+    <material name="grey">
+        <color rgba="0.75 0.75 0.75 1"/>
+    </material>
+    <material name="white">
+        <color rgba="1.0 1.0 1.0 1"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
     <link name="base_link">
         <visual>
         <origin rpy="0 0 0" xyz="0 0 0"/>
         <geometry>
             <cylinder radius="0.06" length="0.09"/>
         </geometry>
+        <material name="grey"/>
         </visual>
     </link>
   
@@ -54,9 +65,9 @@
     </link>
 
     <joint name="pitch_joint" type="revolute">
-        <parent link="base_link"/>
+        <parent link="roll_M1_link"/>
         <child link="pitch_M2_link"/>
-        <origin xyz="0 0 0.105" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <limit lower="-0.4" upper="0.4" effort="0.1" velocity="0.005"/>
         <axis xyz="0 1 0"/>
     </joint>
@@ -74,9 +85,9 @@
     </link>
 
     <joint name="yaw_joint" type="revolute">
-        <parent link="base_link"/>
+        <parent link="pitch_M2_link"/>
         <child link="yaw_M3_link"/>
-        <origin xyz="0 0 0.105" rpy="0 0 0"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
         <limit lower="-0.4" upper="0.4" effort="0.1" velocity="0.005"/>
         <axis xyz="0 0 1"/>
     </joint>
@@ -87,7 +98,7 @@
             <geometry>
                 <sphere radius="0.06"/>
             </geometry>
-            <material name="green"/>
+            <material name="white"/>
         </visual>
     </link>
 
@@ -102,7 +113,7 @@
             <geometry>
                 <cylinder radius="0.00525" length="0.00525"/>
             </geometry>
-            <material name="red"/>
+            <material name="black"/>
         </visual>
     </link>
 
@@ -117,7 +128,7 @@
             <geometry>
                 <cylinder radius="0.00525" length="0.00525"/>
             </geometry>
-            <material name="red"/>
+            <material name="black"/>
         </visual>
     </link>
 
