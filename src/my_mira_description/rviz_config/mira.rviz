@@ -73,7 +73,37 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        camera_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        head_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        left_eye_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        pitch_M2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        right_eye_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
         roll_M1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        yaw_M3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -93,10 +123,22 @@ Visualization Manager:
           Value: true
         body_link:
           Value: true
+        camera_link:
+          Value: true
+        head_link:
+          Value: true
+        left_eye_link:
+          Value: true
+        pitch_M2_link:
+          Value: true
+        right_eye_link:
+          Value: true
         roll_M1_link:
           Value: true
+        yaw_M3_link:
+          Value: true
       Marker Alpha: 1
-      Marker Scale: 1
+      Marker Scale: 0.5
       Name: TF
       Show Arrows: true
       Show Axes: true
@@ -105,7 +147,15 @@ Visualization Manager:
         base_link:
           body_link:
             roll_M1_link:
-              {}
+              pitch_M2_link:
+                yaw_M3_link:
+                  head_link:
+                    camera_link:
+                      {}
+                    left_eye_link:
+                      {}
+                    right_eye_link:
+                      {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -152,9 +202,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.4953981935977936
+      Pitch: 0.17539821565151215
       Target Frame: <Fixed Frame>
-      Yaw: 6.063578128814697
+      Yaw: 0.9203935265541077
     Saved:
       - Class: rviz/Orbit
         Distance: 0.9729476571083069
@@ -212,5 +262,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1200
-  X: 59
-  Y: 40
+  X: 58
+  Y: 20
