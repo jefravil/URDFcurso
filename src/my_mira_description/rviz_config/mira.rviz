@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /RobotModel1
         - /TF1
       Splitter Ratio: 0.658823549747467
     Tree Height: 548
@@ -53,7 +54,7 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Alpha: 1
+    - Alpha: 0.5
       Class: rviz/RobotModel
       Collision Enabled: false
       Enabled: true
@@ -67,18 +68,12 @@ Visualization Manager:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        pitch_M2_link:
+        body_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         roll_M1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        yaw_M3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -96,11 +91,9 @@ Visualization Manager:
         All Enabled: true
         base_link:
           Value: true
-        pitch_M2_link:
+        body_link:
           Value: true
         roll_M1_link:
-          Value: true
-        yaw_M3_link:
           Value: true
       Marker Alpha: 1
       Marker Scale: 1
@@ -110,12 +103,9 @@ Visualization Manager:
       Show Names: false
       Tree:
         base_link:
-          pitch_M2_link:
-            {}
-          roll_M1_link:
-            {}
-          yaw_M3_link:
-            {}
+          body_link:
+            roll_M1_link:
+              {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -162,9 +152,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.1353982836008072
+      Pitch: 0.4953981935977936
       Target Frame: <Fixed Frame>
-      Yaw: 0.24539493024349213
+      Yaw: 6.063578128814697
     Saved:
       - Class: rviz/Orbit
         Distance: 0.9729476571083069
