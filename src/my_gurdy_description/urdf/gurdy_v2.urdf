@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <robot name="gurdy">
-<!-- comando para ir viendo el urdf
-roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_gurdy_description)/urdf/gurdy.urdf'-->
+
     <material name="blue">
         <color rgba="0 0 0.8 1"/>
     </material>
@@ -11,6 +10,13 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
     <material name="green">
         <color rgba="0 0.8 0 1"/>
     </material>
+
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/gurdy</robotNamespace>
+        </plugin>
+    </gazebo>
 	<!-- * * * Link Definitions * * * -->
 
     <link name="base_link">
@@ -58,6 +64,45 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
         <child link="head_link"/>
     </joint>
 
+    <link name="upperleg_M1_yaw_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.015625e-05" ixy="0.0" ixz="0.0" iyy="3.015625e-05" iyz="0.0" izz="3.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0025"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.008" length="0.008"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <joint name="head_upperlegM1_yaw_joint" type="revolute">
+    	<parent link="head_link"/>
+    	<child link="upperleg_M1_yaw_link"/>
+        <origin xyz="-0.02165 -0.0125 -0.008" rpy="0 0 0"/>
+        <limit lower="-0.7" upper="0.7" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <transmission name="tran1_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="head_upperlegM1_yaw_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1_1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
     <link name="upperleg_M1_link">
  	    <inertial>
             <origin xyz="0 0 0.03" rpy="0 0 0"/>
@@ -80,19 +125,13 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
 
 
     <joint name="head_upperlegM1_joint" type="revolute">
-    	<parent link="head_link"/>
+    	<parent link="upperleg_M1_yaw_link"/>
     	<child link="upperleg_M1_link"/>
-        <origin xyz="-0.02165 -0.0125 -0.008" rpy="3.14159 0 0.523599"/>
+        <origin xyz="0 0 0" rpy="3.14159 0 0.523599"/>
         <limit lower="-1.55" upper="0.0" effort="1.0" velocity="0.005"/>
         <axis xyz="0 1 0"/>
 	</joint>
 
-    <!--plugin para actuadores ... esto hace que se configure con el gurdy_control.yaml-->
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/gurdy</robotNamespace>
-        </plugin>
-    </gazebo>
 
     <transmission name="tran1">
         <type>transmission_interface/SimpleTransmission</type>
@@ -100,6 +139,46 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
+    <link name="upperleg_M2_yaw_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.015625e-05" ixy="0.0" ixz="0.0" iyy="3.015625e-05" iyz="0.0" izz="3.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0025"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.008" length="0.008"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <joint name="head_upperlegM2_yaw_joint" type="revolute">
+    	<parent link="head_link"/>
+    	<child link="upperleg_M2_yaw_link"/>
+        <origin xyz="0.02165 -0.0125 -0.008" rpy="0 0 0"/>
+        <limit lower="-0.7" upper="0.7" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <transmission name="tran2_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="head_upperlegM2_yaw_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor2_1">
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
@@ -127,9 +206,9 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
 
 
     <joint name="head_upperlegM2_joint" type="revolute">
-    	<parent link="head_link"/>
+    	<parent link="upperleg_M2_yaw_link"/>
     	<child link="upperleg_M2_link"/>
-        <origin xyz="0.02165 -0.0125 -0.008" rpy="3.14159 0 2.61799"/>
+        <origin xyz="0 0 0" rpy="3.14159 0 2.61799"/>
         <limit lower="-1.55" upper="0.0" effort="1.0" velocity="0.005"/>
         <axis xyz="0 1 0"/>
 	</joint>
@@ -140,6 +219,45 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
         </joint>
         <actuator name="motor2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <link name="upperleg_M3_yaw_link">
+ 	    <inertial>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <mass value="0.01" />
+            <inertia ixx="3.015625e-05" ixy="0.0" ixz="0.0" iyy="3.015625e-05" iyz="0.0" izz="3.125e-07"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0.03" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.06" radius="0.0025"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0.0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.008" length="0.008"/>
+            </geometry>
+        </visual>
+	</link>
+
+    <joint name="head_upperlegM3_yaw_joint" type="revolute">
+    	<parent link="head_link"/>
+    	<child link="upperleg_M3_yaw_link"/>
+        <origin xyz="0 0.025 -0.008" rpy="0 0 0"/>
+        <limit lower="-0.7" upper="0.7" effort="1.0" velocity="0.005"/>
+        <axis xyz="0 0 1"/>
+	</joint>
+
+    <transmission name="tran3_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="head_upperlegM3_yaw_joint">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor3_1">
             <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
             <mechanicalReduction>1</mechanicalReduction>
         </actuator>
@@ -168,9 +286,9 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
 
 
     <joint name="head_upperlegM3_joint" type="revolute">
-    	<parent link="head_link"/>
+    	<parent link="upperleg_M3_yaw_link"/>
     	<child link="upperleg_M3_link"/>
-        <origin xyz="0 0.025 -0.008" rpy="3.14159 0 -1.5708"/>
+        <origin xyz="0 0 0" rpy="3.14159 0 -1.5708"/>
         <limit lower="-1.55" upper="0.0" effort="1.0" velocity="0.005"/>
         <axis xyz="0 1 0"/>
 	</joint>
@@ -336,12 +454,24 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
         <material>Gazebo/Red</material>
     </gazebo>
 
-
-    <joint name="basefoot_peg_M1_basefoot_peg_M1_joint_joint" type="fixed">
+    <joint name="basefoot_peg_M1_basefoot_peg_M1_joint_joint" type="prismatic">
         <parent link="lowerleg_M1_link"/>
         <child link="footM1_link"/>
         <origin xyz="0 0 0.06" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0.0" upper="0.05" effort="100000.0" velocity="50.0"/>
     </joint>
+
+    <transmission name="tran9_1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="basefoot_peg_M1_basefoot_peg_M1_joint_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor9_1">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
 
     <link name="footM2_link">
  	    <inertial>
@@ -371,11 +501,24 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
         <material>Gazebo/Green</material>
     </gazebo>
 
-    <joint name="basefoot_peg_M2_basefoot_peg_M2_joint_joint" type="fixed">
+    <joint name="basefoot_peg_M2_basefoot_peg_M2_joint_joint" type="prismatic">
         <parent link="lowerleg_M2_link"/>
         <child link="footM2_link"/>
         <origin xyz="0 0 0.06" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0.0" upper="0.05" effort="100000.0" velocity="50.0"/>
     </joint>
+
+    <transmission name="tran9_2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="basefoot_peg_M2_basefoot_peg_M2_joint_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor9_2">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
 
     <link name="footM3_link">
  	    <inertial>
@@ -405,13 +548,26 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
         <material>Gazebo/Blue</material>
     </gazebo>
 
-    <joint name="basefoot_peg_M3_basefoot_peg_M3_joint_joint" type="fixed">
+    <joint name="basefoot_peg_M3_basefoot_peg_M3_joint_joint" type="prismatic">
         <parent link="lowerleg_M3_link"/>
         <child link="footM3_link"/>
         <origin xyz="0 0 0.06" rpy="0 0 0"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="0.0" upper="0.05" effort="100000.0" velocity="50.0"/>
     </joint>
 
-    <!--pluging para sensor-->>
+    <transmission name="tran9_3">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="basefoot_peg_M3_basefoot_peg_M3_joint_joint">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor9_3">
+            <hardwareInterface>EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+
     <gazebo>
         <plugin name="gazebo_ros_imu_controller" filename="libgazebo_ros_imu.so">
           <robotNamespace>/gurdy</robotNamespace>
@@ -426,5 +582,6 @@ roslaunch my_mira_description urdf_visualize_preconfig.launch model:='$(find my_
         </plugin>
     </gazebo>
 
+    
 
 </robot>
